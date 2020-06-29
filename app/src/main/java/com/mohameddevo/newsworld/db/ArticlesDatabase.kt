@@ -1,12 +1,15 @@
 package com.mohameddevo.newsworld.db
 
 import android.content.Context
-import androidx.room.*
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.mohameddevo.newsworld.models.Article
 
 @Database(
     entities = [Article::class],
-    version = 1
+    version = 2
 )
 @TypeConverters(Converters::class)
 abstract class ArticlesDatabase : RoomDatabase() {
@@ -26,7 +29,9 @@ abstract class ArticlesDatabase : RoomDatabase() {
                 context.applicationContext,
                 ArticlesDatabase::class.java,
                 "article_db.db"
-            ).build()
+            )
+                .fallbackToDestructiveMigration()
+                .build()
 
 
     }
